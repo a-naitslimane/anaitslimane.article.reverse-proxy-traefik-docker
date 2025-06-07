@@ -1,0 +1,49 @@
+services:
+  traefik-reverse-proxy:
+    image: traefik:v3.1
+
+    command:
+      - "--api.dashboard=true"
+      - "--api.insecure=true"
+
+      - "--serversTransport.insecureSkipVerify=true"
+      
+      - "--entryPoints.web.address=:80"
+      - "--entryPoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entryPoints.web.http.redirections.entryPoint.scheme=https"
+      - "--entryPoints.websecure.address=:443"
+
+      - "--providers.docker=true"
+      - "--providers.docker.exposedByDefault=false"
+      - "--providers.docker.endpoint=unix:///var/run/docker.sock"
+      - "--providers.docker.network=my-external-network"
+
+      - "--accessLog.filePath=/logs/access.log"
+      
+      - "--log.filePath=/logs/traefik.log"
+      - "--log.level=DEBUG"
+
+    volumes:
+      - ./certs/:/etc/certs:ro
+      - ./logs:/logs:rw
+    
+    labels:
+      - "traefik.providers.file.watch=true"
+      
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+
+  traefik-mkcert:
+    image: vishnunair/docker-mkcert
+    container_name: traefik-mkcert
+
+    environment:
+      - domain=${DOMAIN_NAME}, *.${DOMAIN_NAME}
+    volumes:
+        - ./certs/:/root/.local/share/mkcert
+    labels:
+      - "traefik.enable=false"
+    networks:
+      - my-external-network

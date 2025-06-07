@@ -1,0 +1,26 @@
+networks:
+  my-external-network:
+    external: true
+
+services:
+  traefik-reverse-proxy:
+    container_name: ${ENV}-traefik-reverse-proxy
+    environment:
+      - DOMAIN_NAME=${DOMAIN_NAME}
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    security_opt:
+      - no-new-privileges=true
+    
+    labels:
+    - "traefik.http.routers.traefik-reverse-proxy.rule=Host(`${DASHBOARD_PREFIX}.${DOMAIN_NAME}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
+    - "traefik.http.routers.traefik-reverse-proxy.service=api@internal"
+    
+    ports:
+      - "80:80"
+      - "443:443"
+    
+    networks:
+      - my-external-network
