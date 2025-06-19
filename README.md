@@ -1,3 +1,5 @@
+# Dockerized Traefik reverse proxy server, with an automatic Let’s Encrypt certificate provider
+
 ## Local Setup
 ### Prerequisites:
 * ***Docker*** and ***Docker Compose*** installed on your machine
@@ -41,12 +43,8 @@
 ### Testing
 * Check that both the ***traefik-reverse-proxy*** and ***traefik-mkcert*** containers are running and healthy.
 * Check your ***certs*** directory, if eveything went fine, it should now be populated with local certificates.
-If you check in the logs (here I am using Docker Desktop) you should have this:
-![Docker Desktop mkcert logs](images/mkcert-container-log.png)  <br>
 
-* Open the following address in your browser: ***http://localhost:8080/dashboard/***\
-You should be seeing the following dashboard:
-![Traefik Dashboard](images/traefik-dashboard.png)
+* Open the following address in your browser: **http://localhost:8080/dashboard/** . You should be seeing the dashboard
  
 ---
 
