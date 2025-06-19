@@ -6,7 +6,7 @@
 
 1. **Clone the source code to your working-directory**
 
-2.  **Set environement variables**
+2.  **Set environment variables**
     * Create a copy of ***.env.exemple*** named ***.env***. 
         > In it, you can set your own values of course, as long as they are consistent with the rest of the following config.\
         > The <mark>DOMAIN_NAME</mark> value in particular
@@ -70,7 +70,7 @@ You should be seeing the following dashboard:
 
 1. **Clone (or remote copy) the source code to your server's working-directory of choice**
 
-2.  **Set environement variables:**
+2.  **Set environment variables:**
     * Create a copy of ***.env.exemple*** named ***.env*** and set the correct values within it:
         * **ENV**=prod.
         * Your own **DOMAIN_NAME**
